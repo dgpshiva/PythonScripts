@@ -2,21 +2,25 @@ import sys
 import ldap
 
 
-Server = "ldap://my-ldap-server"
-DN, Secret, un = sys.argv[1:4]
+Server = "ldap://<ldap server>"
 
-Base = "dc=mydomain,dc=co,dc=uk"
+username = ""
+fullUsername = "DIR\\"
+password = ""
+
+Base = "dc=DIR,dc=co,dc=com"
 Scope = ldap.SCOPE_SUBTREE
-Filter = "(&(objectClass=user)(sAMAccountName="+un+"))"
+Filter = "(&(objectClass=user)(sAMAccountName="+username+"))"
 Attrs = ["displayName"]
 
 l = ldap.initialize(Server)
 l.protocol_version = 3
-print l.simple_bind_s(DN, Secret)
+l.set_option(ldap.OPT_REFERRALS, 0)
+print l.simple_bind_s(fullUsername, password)
 
 r = l.search(Base, Scope, Filter, Attrs)
-Type,user = l.result(r,60)
-Name,Attrs = user[0]
+Type, user = l.result(r, 60)
+Name, Attrs = user[0]
 if hasattr(Attrs, 'has_key') and Attrs.has_key('displayName'):
   displayName = Attrs['displayName'][0]
   print displayName
