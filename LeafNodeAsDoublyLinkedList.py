@@ -1,4 +1,3 @@
-
 # Python program to extract leaf nodes from binary tree
 # using double linked list
 
