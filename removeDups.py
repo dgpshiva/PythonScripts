@@ -37,7 +37,7 @@ def removeValueWithDups(a):
 #         result.append(item)
 #     return result
 
-def removeDupsPreserveOrder(a, idfun = None):
+def removeDupsPreserveOrder(a):
     seen = {}
     result = []
     for item in a:
