@@ -6,4 +6,3 @@ def GCD(x, y):
 
 
 print GCD(210, 45)
-

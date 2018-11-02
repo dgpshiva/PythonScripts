@@ -50,4 +50,3 @@ def ordinary():
 
 pretty = make_pretty(ordinary)
 pretty()
-
