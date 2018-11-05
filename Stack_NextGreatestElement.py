@@ -21,6 +21,6 @@ def nextGreaterElement(input):
 
 if __name__ == '__main__':
     # input = [11, 13, 21, 3]
-    # input = [11, 12, 10, 9, 15]
-    input = [11, 10, 9, 8, 7]
+    input = [11, 12, 10, 9, 15]
+    # input = [11, 10, 9, 8, 7]
     nextGreaterElement(input)
