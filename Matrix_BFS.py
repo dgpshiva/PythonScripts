@@ -25,7 +25,7 @@ def findPath(grid, rows, cols):
                 queue.insert(0, (current[0], current[1]+1, current[2]+1))
                 visited[current[0]][current[1]+1] = 1
 
-    return -1
+    return None
 
 
 if __name__ == '__main__':

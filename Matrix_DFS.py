@@ -16,7 +16,7 @@ def DFSUtil(input, visited, currentCell, rows, cols, value):
             nextCell = (currentCell[0], currentCell[1]+1)
             return DFSUtil(input, visited, nextCell, rows, cols, value)
 
-    return -1
+    return None
 
 
 def DFS(input, rows, cols, value):
