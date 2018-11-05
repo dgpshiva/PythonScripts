@@ -10,39 +10,35 @@
 #     evaluate(expression1) => 20
 #     evaluate(expression2) => 20
 
-def calculate(input):
-    numbersStack = []
-    operandsStack = []
+# def calculate(input):
+#     numbersStack = []
+#     operandsStack = []
 
-    currentNumber = ""
-    for i in range(len(input)-1, -1, -1):
-        if input[i] != "+" and input[i] != "-":
-            currentNumber += input[i]
-        else:
-            numbersStack.append(int(currentNumber[::-1]))
-            operandsStack.append(input[i])
-            currentNumber = ""
+#     currentNumber = ""
+#     for i in range(len(input)-1, -1, -1):
+#         if input[i] != "+" and input[i] != "-":
+#             currentNumber += input[i]
+#         else:
+#             numbersStack.append(int(currentNumber[::-1]))
+#             operandsStack.append(input[i])
+#             currentNumber = ""
 
-    numbersStack.append(int(currentNumber))
-    print numbersStack
-    print operandsStack
+#     numbersStack.append(int(currentNumber))
 
-    while len(operandsStack) > 0:
-        firstNumber = numbersStack.pop()
-        secondNumber = numbersStack.pop()
-        operand = operandsStack.pop()
-        if operand == "+":
-            numbersStack.append(firstNumber + secondNumber)
-        elif operand == "-":
-            numbersStack.append(firstNumber - secondNumber)
+#     while len(operandsStack) > 0:
+#         firstNumber = numbersStack.pop()
+#         secondNumber = numbersStack.pop()
+#         operand = operandsStack.pop()
+#         if operand == "+":
+#             numbersStack.append(firstNumber + secondNumber)
+#         elif operand == "-":
+#             numbersStack.append(firstNumber - secondNumber)
 
-    return numbersStack.pop()
+#     return numbersStack.pop()
 
-# expression1 = "6+9-12"
-expression2 = "1+2+3+4-5-6-7"
-print calculate(expression2)
-
-
+# # expression1 = "6+9-12"
+# expression2 = "1+2+3+4-5-6-7"
+# print calculate(expression2)
 
 
 
@@ -73,32 +69,30 @@ def calculate(input):
         if input[i] == ")":
             precedenceOperations = True
             precedenceOperandsStack.append(input[i])
+
         elif input[i] == "(":
             if currentNumber != "":
                 precedenceNumbersStack.append(int(currentNumber[::-1]))
                 currentNumber = ""
-            print precedenceNumbersStack
-            firstNumber = precedenceNumbersStack.pop()
-            secondNumber = precedenceNumbersStack.pop()
             currentOperator = precedenceOperandsStack.pop()
-            print firstNumber
-            print secondNumber
-            print currentOperator
-            if currentOperator == "+":
-                precedenceNumbersStack.append(firstNumber + secondNumber)
-            elif currentOperator == "-":
-                precedenceNumbersStack.append(firstNumber - secondNumber)
-            precedenceOperandsStack.pop()
-            print precedenceOperandsStack
-            print "\n"
-            currentNumber = ""
+            while currentOperator != ")":
+                firstNumber = precedenceNumbersStack.pop()
+                secondNumber = precedenceNumbersStack.pop()
+                if currentOperator == "+":
+                    precedenceNumbersStack.append(firstNumber + secondNumber)
+                elif currentOperator == "-":
+                    precedenceNumbersStack.append(firstNumber - secondNumber)
+                currentOperator = precedenceOperandsStack.pop()
+
             if len(precedenceOperandsStack) == 0:
                 precedenceOperations = False
                 numbersStack.append(precedenceNumbersStack.pop())
-                print numbersStack
-                print "\n\n"
+
+
         elif input[i] != "+" and input[i] != "-":
             currentNumber += input[i]
+
+
         else:
             if precedenceOperations:
                 if currentNumber != "":
@@ -112,10 +106,6 @@ def calculate(input):
                 operandsStack.append(input[i])
 
     numbersStack.append(int(currentNumber))
-    # print numbersStack
-    # print operandsStack
-    # print precedenceNumbersStack
-    # print precedenceOperandsStack
 
     while len(operandsStack) > 0:
         firstNumber = numbersStack.pop()
@@ -138,8 +128,6 @@ def calculate(input):
 # expression3 = "22+(2-4)"
 expression4 = "1+5-((2-9)-(9-0)+(24-75))+10+(100-9)"
 print calculate(expression4)
-
-
 
 
 
