@@ -1,29 +1,35 @@
-def findTriplets(input):
-    input.sort()
-    s = set()
-    output = []
-    for i in range(0, len(input)-1):
-        j = i+1
-        k = len(input) - 1
-        while j < k:
-            if input[i] + input[j] + input[k] == 0:
-                if str(input[i]) + ":" + str(input[j]) + ":" + str(input[k]) not in s:
-                    triplet = []
-                    triplet.append(input[i])
-                    triplet.append(input[j])
-                    triplet.append(input[k])
-                    output.append(triplet)
-                    s.add(str(input[i]) + ":" + str(input[j]) + ":" + str(input[k]))
-                j += 1
-                k -= 1
-            elif input[i] + input[j] + input[k] < 0:
-                j += 1
-            else:
-                k -= 1
+class Solution(object):
+    def threeSum(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        output = []
+        nums.sort()
+        for i in range(0, len(nums) - 2):
+            if i == 0 or (i > 0 and nums[i] != nums[i-1]):
+                l = i + 1
+                r = len(nums) - 1
+                while l < r:
+                    if nums[i] + nums[l] + nums[r] == 0:
+                        triplet = []
+                        triplet.append(nums[i])
+                        triplet.append(nums[l])
+                        triplet.append(nums[r])
+                        output.append(triplet)
+                        while l < r and nums[l] == nums[l+1]:
+                            l += 1
+                        while l < r and nums[r] == nums[r-1]:
+                            r -= 1
+                        l += 1
+                        r -= 1
+                    elif nums[i] + nums[l] + nums[r] > 0:
+                        l += 1
+                    else:
+                        r -= 1
 
-    return output
+        return output
 
-
-if __name__ == '__main__':
-    print findTriplets([-1, 0, 1, 2, -1, -4])
+s = Solution()
+print s.threeSum([-1,0,1,2,-1,-4])
 
