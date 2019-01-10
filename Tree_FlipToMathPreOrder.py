@@ -20,7 +20,7 @@ class Solution(object):
     def preOrder(self, root, voyage, i, output):
         if root:
             if root.val == voyage[i]:
-                if not self.preOrder(root.left, voyage, i+1, output) or self.preOrder(root.right, voyage, i+2, output):
+                if not self.preOrder(root.left, voyage, i+1, output) or not self.preOrder(root.right, voyage, i+2, output):
                     output.append(root.val)
                     temp = root.left
                     root.left = root.right
@@ -37,6 +37,6 @@ if __name__ == '__main__':
     root.right = TreeNode(3)
 
     s = Solution()
-    voyage = [1, 2, 3]
+    voyage = [1, 3, 2]
     print s.flipMatchVoyage(root, voyage)
 
