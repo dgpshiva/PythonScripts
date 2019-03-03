@@ -6,6 +6,9 @@ class TreeNode(object):
 
 
 class Solution(object):
+    def __init__(self):
+        self.i = 0
+
     def flipMatchVoyage(self, root, voyage):
         """
         :type root: TreeNode
@@ -13,22 +16,21 @@ class Solution(object):
         :rtype: List[int]
         """
         output = []
-        self.preOrder(root, voyage, 0, output)
-        return output
+        return output if self.preOrder(root, voyage, output) else [-1]
 
+    def preOrder(self, root, voyage, output):
+        if not root:
+            return True
 
-    def preOrder(self, root, voyage, i, output):
-        if root:
-            if root.val == voyage[i]:
-                if not self.preOrder(root.left, voyage, i+1, output) or not self.preOrder(root.right, voyage, i+2, output):
-                    output.append(root.val)
-                    temp = root.left
-                    root.left = root.right
-                    root.right = temp
-            else:
-                return False
+        if root.val != voyage[self.i]:
+           return False
 
-        return True
+        self.i += 1
+        if root.left and root.left.val != voyage[self.i]:
+            output.append(root.val)
+            root.left, root.right = root.right, root.left
+
+        return self.preOrder(root.left, voyage, output) and self.preOrder(root.right, voyage, output)
 
 
 if __name__ == '__main__':
@@ -39,4 +41,3 @@ if __name__ == '__main__':
     s = Solution()
     voyage = [1, 3, 2]
     print s.flipMatchVoyage(root, voyage)
-
