@@ -5,12 +5,14 @@ class NumberToWords:
         self.tensDigits = {2:'twenty', 3:"thirty", 4:"forty", 5:"fifty", 6:"sixty", 7:"seventy", 8:"eighty", 9:"ninety"}
 
     def returnWordsForNumber(self, number):
+        lastIndex = len(number) - 1
+        return self.returnInHundreths(number[0 : lastIndex - 3 + 1]) + " thousand " + self.returnInHundreths(number[lastIndex - 3 + 1 : lastIndex + 1])
+        
+    def returnInHundreths(self, number):
         output = ""
         lastIndex = len(number) - 1
         for i in range(0, len(number)):
-            if lastIndex - i == 3 and int(number[i]) in self.unitsDigits:
-                output += self.unitsDigits[int(number[i])] + " thousand "
-            elif lastIndex - i == 2 and int(number[i]) in self.unitsDigits:
+            if lastIndex - i == 2 and int(number[i]) in self.unitsDigits:
                 output += self.unitsDigits[int(number[i])] + " hundred "
             elif lastIndex - i == 1:
                 if int(number[i]) == 0 and int(number[i]) in self.unitsDigits:
@@ -32,7 +34,8 @@ class NumberToWords:
 
 if __name__ == '__main__':
     n = NumberToWords()
-    # print n.returnWordsForNumber("1234")
+    # print n.returnWordsForNumber("11234")
+    print n.returnWordsForNumber("1234")
     # print n.returnWordsForNumber("9923")
     # print n.returnWordsForNumber("523")
     # print n.returnWordsForNumber("89")
@@ -48,7 +51,7 @@ if __name__ == '__main__':
     # print n.returnWordsForNumber("0040")
     # print n.returnWordsForNumber("0004")
     # print n.returnWordsForNumber("0000")
-    print n.returnWordsForNumber("11234")
+    
 
 
 
