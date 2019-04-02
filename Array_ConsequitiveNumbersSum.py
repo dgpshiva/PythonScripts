@@ -1,3 +1,5 @@
+# Need to find what this does, else delete
+
 def findConsequitiveNumbers(N):
     ans = 0
     for k in range(1, 2*N+1):
