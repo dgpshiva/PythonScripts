@@ -1,3 +1,17 @@
+# Given a number, find element closest to it in an array
+# Efficient solution:
+#   -   Check edge cases, if element lower than least ot greater than greatest,
+#       return least and greatest respectively
+#   -   Perform binary search
+#   -   If number == arr[mid], return arr[mid]
+#   -   else if number < arr[mid]
+#           if number > arr[mid-1], return arr[mid] or arr[mid-1], whichever is closest
+#           else continue with binary search
+#   -   else if number > arr[mid]
+#           if number < arr[mid+1], return arr[mid] or arr[mid+1], whichever is closest
+#           else continue with binary search
+
+
 def findClosest(arr, target):
     arr.sort()
 
@@ -21,7 +35,7 @@ def findClosest(arr, target):
             if mid<len(arr) and target < arr[mid+1]:
                 return getClosest(arr, mid, mid+1, target)
             i = mid+1
-    
+
     return -1
 
 def getClosest(arr, first, second, target):
