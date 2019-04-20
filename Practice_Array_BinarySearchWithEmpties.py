@@ -1,13 +1,17 @@
-# def binarySearch(input, first, last, value):
+# Perform binary search in array of strings that may have empty strings
+# Eg. input: ["at", "", "", "", "ball", "", "", "car", "", "", "dad", "", ""]
+
 def binarySearch(input, value):
     if not input:
         return None
 
-    # if first > last:
-    #     return None
     first = 0
     last = len(input) - 1
     mid = (first+last)//2
+
+    # If mid value is an empty string, 
+    # find the immediate left or right non-empty value
+    # and set mid to that
     if input[mid] == "":
         left = mid - 1
         right = mid + 1
@@ -25,21 +29,15 @@ def binarySearch(input, value):
         if input[mid] == value:
             return input[mid]
         if input[mid] < value:
-            # first = mid + 1
-            # return binarySearch(input, first, last, value)
             return binarySearch(input[mid+1 : last+1], value)
         else:
-            # last = mid - 1
-            # return binarySearch(input, first, last, value)
             return binarySearch(input[first : mid], value)
 
 
 if __name__ == '__main__':
     input = ["at", "", "", "", "ball", "", "", "car", "", "", "dad", "", ""]
-    # print binarySearch(input, 0, len(input)-1, "ball")
-    # print binarySearch(input, 0, len(input)-1, "")
     print binarySearch(input, "ball")
     print binarySearch(input, "cat")
-    # print binarySearch(input, "")
+    print binarySearch(input, "")
     print binarySearch(input, "at")
-
+   

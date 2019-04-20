@@ -20,16 +20,16 @@ class Room:
             if number%i == 0 or number%(i+2) == 0:
                 return False
             i += 6
-        return True
-        
+        return True        
 
         # if number == 1:
         #     return False
         # for i in range(2, number - 1):
         #     if number % i == 0:
         #         return False
-        # return True
-    
+        # return True    
+
+
     def getSumOfDigits(self, number):
         sumDigits = 0
         while number // 10 != 0:
