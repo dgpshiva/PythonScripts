@@ -51,5 +51,13 @@ if __name__ == '__main__':
     tree.root.left.left = Node(3)
     tree.root.left.right = Node(5)
 
-    tree.findMaxSum(tree.root)
-    print tree.maxSum
+    t = BTree()
+    t.root = Node(1)
+    t.root.left = Node(2)
+    t.root.left.left = Node(4)
+    t.root.left.right = Node(3)
+    t.root.left.right.right = Node(4)
+    t.root.right = Node(1)
+
+    t.findMaxSum(t.root)
+    print t.maxSum
