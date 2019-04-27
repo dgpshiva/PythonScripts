@@ -21,56 +21,65 @@
 # Continue till queue is empty
 
 
-class LinkedListNode:
-    def __init__(self, data):
-        self.data = data
-        self.next = None
+from collections import deque
 
+class LinkedListNode:
+    def __init__(self, val):
+        self.val = val
+        self.next = None
+    
 class LinkedList:
     def __init__(self):
-        self.head = None
-
-    def insert(self, data):
+        self.head = self.tail = None
+        
+    
+    def insert(self, val):
         if self.head is None:
-            self.head = LinkedListNode(data)
+            self.head = self.tail = LinkedListNode(val)
         else:
-            node = self.head
-            while node.next:
-                node = node.next
-            newNode = LinkedListNode(data)
-            node.next = newNode
+            node = LinkedListNode(val)
+            self.tail.next = node
+            self.tail = node
+    
+    def display(self):
+        node = self.head
+        while node:
+            print str(node.val) + " ",
+            node = node.next
 
 
 class Node:
-    def __init__(self, data):
-        self.data = data
+    def __init__(self, val):
+        self.val = val
         self.left = self.right = None
-
+    
 class Tree:
     def __init__(self):
         self.root = None
-        self.LinkedListsList = []
-
+    
     def createLinkedLists(self):
-        linkedList = LinkedList()
-        queue = []
-        node = self.root
-        if node:
-            queue.append(node)
-            queue.append(Node("EndOfLevel"))
+        lll = []
+        if self.root is None:
+            return lll
+        queue = deque()
+        queue.append(self.root)
+        queue.append("EndOfLevel")
+        ll = LinkedList()
         while queue:
-            node = queue.pop(0)
-            if node.data != "EndOfLevel":
-                if node.left:
-                    queue.append(node.left)
-                if node.right:
-                    queue.append(node.right)
-                linkedList.insert(node.data)
+            q = queue.popleft()
+            if q != "EndOfLevel":
+                ll.insert(q.val)
+                if q.left:
+                    queue.append(q.left)
+                if q.right:
+                    queue.append(q.right)
             else:
-                self.LinkedListsList.append(linkedList)
+                lll.append(ll)
                 if queue:
-                    linkedList = LinkedList()
-                    queue.append(Node("EndOfLevel"))
+                    queue.append("EndOfLevel")
+                    ll = LinkedList()
+        
+        return lll
 
 
 if __name__ == '__main__':
@@ -83,16 +92,13 @@ if __name__ == '__main__':
     tree.root.right.left = Node(6)
     tree.root.right.right = Node(7)
 
-    tree.createLinkedLists()
+    lll = tree.createLinkedLists()
 
-    for linkedList in tree.LinkedListsList:
+    for linkedList in lll:
         node = linkedList.head
         while node:
-            print str(node.data) + " ",
+            print str(node.val) + " ",
             node = node.next
         print ""
-
-
-
 
 

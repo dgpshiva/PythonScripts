@@ -8,6 +8,7 @@ class Tree:
         self.root = None
         self.maxSum = 0
 
+    # Function to get max sum path from a node to its leaf
     def getMaxSumNodeToLeaf(self, node, curSum):
         if node:
             curSum += node.val
@@ -20,12 +21,19 @@ class Tree:
 
     def returnMaxSum(self, node):
         if node:
+            # For every node, get these 4 values:
+            # Max sum path from node's left child to its leaf
+            # Max sum path from node's right child to its leaf
+            # Max sum path contained within left side 
+            # Max sum path contained within right side 
             self.maxSum = 0
             leftMaxSumNodeToLeaf = self.getMaxSumNodeToLeaf(node.left, 0)
             self.maxSum = 0
             rightMaxSumNodeToLeaf = self.getMaxSumNodeToLeaf(node.right, 0)
             leftMaxSumLeafToLeaf = self.returnMaxSum(node.left)
             rightMaxSumLeafToLeaf = self.returnMaxSum(node.right)
+
+            # Result will be max between these
             return max(leftMaxSumNodeToLeaf + rightMaxSumNodeToLeaf + node.val, leftMaxSumLeafToLeaf, rightMaxSumLeafToLeaf)
 
 
