@@ -1,7 +1,7 @@
 def findPath(grid, rows, cols):
     queue = []
 
-    visited = [[0 for x in range(0, rows)] for y in range(0, cols)]
+    visited = [[0 for x in range(0, cols)] for y in range(0, rows)]
 
     start = (0, 0, 0)
     queue.append(start)
@@ -12,24 +12,26 @@ def findPath(grid, rows, cols):
         if grid[current[0]][current[1]] == 9:
             return current[2]
         else:
-            if current[0]-1 >= 0 and visited[current[0]-1][current[1]] != 1 and grid[current[0]-1][current[1]] != 1:
+            if current[0]-1 >= 0 and visited[current[0]-1][current[1]] != 1 and grid[current[0]-1][current[1]] != 0:
                 queue.insert(0, (current[0]-1, current[1], current[2]+1))
                 visited[current[0]-1][current[1]] = 1
-            if current[1]-1 >= 0 and visited[current[0]][current[1]-1] != 1 and grid[current[0]][current[1]-1] != 1:
+            if current[1]-1 >= 0 and visited[current[0]][current[1]-1] != 1 and grid[current[0]][current[1]-1] != 0:
                 queue.insert(0, (current[0], current[1]-1, current[2]+1))
                 visited[current[0]][current[1]-1] = 1
-            if current[0]+1 < rows and visited[current[0]+1][current[1]] != 1 and grid[current[0]+1][current[1]] != 1:
+            if current[0]+1 < rows and visited[current[0]+1][current[1]] != 1 and grid[current[0]+1][current[1]] != 0:
                 queue.insert(0, (current[0]+1, current[1], current[2]+1))
                 visited[current[0]+1][current[1]] = 1
-            if current[1]+1 < cols and visited[current[0]][current[1]+1] != 1 and grid[current[0]][current[1]+1] != 1:
+            if current[1]+1 < cols and visited[current[0]][current[1]+1] != 1 and grid[current[0]][current[1]+1] != 0:
                 queue.insert(0, (current[0], current[1]+1, current[2]+1))
                 visited[current[0]][current[1]+1] = 1
 
-    return None
+    return -1
 
 
 if __name__ == '__main__':
-    grid = [[0, 1, 0], [0, 0, 1], [0, 9, 1]]
-    print findPath(grid, 3, 3)
-    #grid = [[0, 0, 0, 0], [0, 0, 0, 0], [1, 0, 9, 1], [0, 0, 0, 0]]
+    # grid = [[0, 1, 0], [0, 0, 1], [0, 9, 1]]
+    # print findPath(grid, 3, 3)
+    # #grid = [[0, 0, 0, 0], [0, 0, 0, 0], [1, 0, 9, 1], [0, 0, 0, 0]]
     # print findPath(grid, 4, 4)
+    grid = [[1, 1, 1, 1], [0, 1, 1, 1], [0, 1, 0, 1], [0, 1, 0, 1], [0, 1, 9, 1]]
+    print findPath(grid, 5, 4)
