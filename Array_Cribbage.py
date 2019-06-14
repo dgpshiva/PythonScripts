@@ -1,3 +1,6 @@
+# Desiging methods to calculate the total points 
+# in a given hand at Cribbage game
+
 from enum import Enum
 import math
 
@@ -55,16 +58,31 @@ class Cribbage:
         sortedRanks = sorted([c.rank for c in self.cards])
         for i in range(0, len(sortedRanks)):
             for j in range(i+1, len(sortedRanks)):
-                self.findTarget([sortedRanks[i]] + sortedRanks[j:len(sortedRanks)], 0, 15)
+                self.findTarget([sortedRanks[i]] + sortedRanks[j:len(sortedRanks)], 15)
         return "Fifteens checked. Your total points now are: " + str(self.total)
 
-    def findTarget(self, arr, currentTotal, target):
-        if target not in arr and len(arr) > 0 and target > arr[0]:
-            currentTotal += arr[0]
-            target = 15 - currentTotal
-            self.findTarget(arr[1:len(arr)], currentTotal, target)
+    def findTarget(self, arr, target):
+        if not self.binarySearch(arr, target) and len(arr) > 0 and target > arr[0]:
+            target -= arr[0]
+            self.findTarget(arr[1:len(arr)], target)
         elif target in arr:
             self.total += 2
+
+    # Using binary search to find the target in the array 
+    # since the array is always sorted
+    def binarySearch(self, inputArr, target):
+        if len(inputArr) > 0:
+            mid = len(inputArr)//2
+            if inputArr[mid] == target:
+                return True
+            
+            if target > inputArr[mid]:
+                self.binarySearch(inputArr[mid+1: len(inputArr)], target)
+            else:
+                self.binarySearch(inputArr[0:mid], target)
+            
+        return False
+
     
 
 if __name__ == '__main__':
