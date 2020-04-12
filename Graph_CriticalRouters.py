@@ -11,6 +11,7 @@ class Solution(object):
         graph = makeGraph(connections)
         connections = set(map(tuple, (map(sorted, connections))))
         rank = [-2] * n
+        partOfCycle = set()
 
         def dfs(node, depth):
             # if rank[node] >= 1:   # If node numbering starts with 1
@@ -25,12 +26,26 @@ class Solution(object):
                 back_depth = dfs(neighbor, depth + 1)
                 if back_depth <= depth:
                     connections.discard(tuple(sorted((node, neighbor))))
+                    # Get nodes that are part of a cycle
+                    partOfCycle.add(node)
+                    partOfCycle.add(neighbor)
                 min_back_depth = min(min_back_depth, back_depth)
             return min_back_depth
             
         # dfs(0, 0)  # since this is a connected graph, we don't have to loop over all nodes.
         dfs(1, 1)  # If node numbering starts with 1
-        return list(connections)
+
+        criticalConnectionRouters = {}
+        for connection in connections:
+            criticalConnectionRouters[connection[0]] = 1 if connection[0] not in criticalConnectionRouters else criticalConnectionRouters[connection[0]]+1
+            criticalConnectionRouters[connection[1]] = 1 if connection[1] not in criticalConnectionRouters else criticalConnectionRouters[connection[1]]+1
+
+        criticalRouters = []
+        for router in criticalConnectionRouters:
+            if router in partOfCycle or criticalConnectionRouters[router] > 1:
+                criticalRouters.append(router)
+
+        return list(criticalRouters)
 
 
 if __name__ == '__main__':
